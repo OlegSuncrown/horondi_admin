@@ -1,0 +1,5 @@
+{
+    "modulePathIgnorePatterns": [
+        "cypress"
+    ]
+}
