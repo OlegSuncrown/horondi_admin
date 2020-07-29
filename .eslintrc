@@ -130,7 +130,7 @@
       "functions"
     ],
     "no-param-reassign": [
-      2,
+      0,
       {
         "props": false
       }
@@ -181,7 +181,7 @@
     "react/no-array-index-key": 0,
     "react/no-unknown-property": 2,
     "react/display-name": [
-      2,
+      0,
       {
         "ignoreTranspilerName": false
       }

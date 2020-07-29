@@ -31,5 +31,8 @@ export const useStyles = makeStyles((theme) => ({
     '&.shrink': {
       transform: 'translate(32px, -3px) scale(0.75)'
     }
+  },
+  editable: {
+    padding: '10px'
   }
 }));

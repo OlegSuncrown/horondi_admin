@@ -6,11 +6,21 @@ const useNewsHandlers = () => {
   const [newsVideo, setNewsVideo] = useState('');
 
   const [ukAuthorName, ukSetAuthor] = useState('');
-  const [ukText, ukSetText] = useState('');
+  const [ukText, ukSetText] = useState([
+    {
+      type: 'heading-one',
+      children: [{ text: 'Текст (укр.)' }]
+    }
+  ]);
   const [ukTitle, ukSetTitle] = useState('');
 
   const [enAuthorName, enSetAuthor] = useState('');
-  const [enText, enSetText] = useState('');
+  const [enText, enSetText] = useState([
+    {
+      type: 'heading-one',
+      children: [{ text: 'Текст (англ.)' }]
+    }
+  ]);
   const [enTitle, enSetTitle] = useState('');
 
   return {

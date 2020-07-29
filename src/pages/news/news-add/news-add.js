@@ -1,19 +1,47 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { Editable, withReact, Slate } from 'slate-react';
+import isHotkey from 'is-hotkey';
 import { FormControl, Paper, TextField, Grid } from '@material-ui/core';
+import { withHistory } from 'slate-history';
 import { useDispatch, useSelector } from 'react-redux';
+import { createEditor } from 'slate';
 import { useStyles } from './news-add.styles';
 import { SaveButton } from '../../../components/buttons';
 import { addArticle } from '../../../redux/news/news.actions';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 import useNewsHandlers from '../../../utils/use-news-handlers';
+import useEditorOperations from '../../../utils/use-editor-operations';
+import Toolbar from '../../../components/editor/toolbar';
+import { BlockButton, MarkButton } from '../../../components/editor/buttons';
+import Element from '../../../components/editor/element';
+import Leaf from '../../../components/editor/leaf';
 
 const { languages } = config;
+
+const HOTKEYS = {
+  'mod+b': 'bold',
+  'mod+i': 'italic',
+  'mod+u': 'underline',
+  'mod+`': 'code'
+};
 
 const NewsAdd = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loading = useSelector(({ News }) => News.loading);
+  const {
+    // deserializeHTML,
+    serializeToHTML,
+    toggleMark
+  } = useEditorOperations();
+  const ukRenderElement = useCallback((props) => <Element {...props} />, []);
+  const ukRenderLeaf = useCallback((props) => <Leaf {...props} />, []);
+  const ukEditor = useMemo(() => withHistory(withReact(createEditor())), []);
+
+  const enRenderElement = useCallback((props) => <Element {...props} />, []);
+  const enRenderLeaf = useCallback((props) => <Leaf {...props} />, []);
+  const enEditor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   const {
     authorPhoto,
@@ -35,6 +63,9 @@ const NewsAdd = () => {
     enSetText,
     enSetTitle
   } = useNewsHandlers();
+
+  const serializedUkText = serializeToHTML(ukText);
+  const serializedEnText = serializeToHTML(enText);
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
@@ -68,11 +99,11 @@ const NewsAdd = () => {
       text: [
         {
           lang: languages[0],
-          value: e.target.ukText.value
+          value: serializedUkText
         },
         {
           lang: languages[1],
-          value: e.target.enText.value
+          value: serializedEnText
         }
       ],
       images: {
@@ -87,7 +118,7 @@ const NewsAdd = () => {
     };
     dispatch(addArticle(news));
   };
-
+  console.log(serializedUkText);
   const entertaimentOptions = [
     {
       id: 'authorPhoto',
@@ -134,15 +165,6 @@ const NewsAdd = () => {
       ukTitle,
       handler: (e) => ukSetTitle(e.target.value),
       required: true
-    },
-    {
-      id: 'ukText',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Текст (укр.)',
-      ukText,
-      handler: (e) => ukSetText(e.target.value),
-      required: true
     }
   ];
 
@@ -162,15 +184,6 @@ const NewsAdd = () => {
       label: 'Заголовок (англ.)',
       enTitle,
       handler: (e) => enSetTitle(e.target.value),
-      required: true
-    },
-    {
-      id: 'enText',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Текст (англ.)',
-      enText,
-      handler: (e) => enSetText(e.target.value),
       required: true
     }
   ];
@@ -256,10 +269,98 @@ const NewsAdd = () => {
               </Paper>
             </Grid>
             <Grid item xs={6}>
-              <Paper className={classes.newsItemAdd}>{ukNewsInputs}</Paper>
+              <Paper className={classes.newsItemAdd}>
+                {ukNewsInputs}
+                <Slate
+                  editor={ukEditor}
+                  value={ukText}
+                  onChange={(value) => ukSetText(value)}
+                >
+                  <Toolbar>
+                    <MarkButton format='bold' icon='format_bold' />
+                    <MarkButton format='italic' icon='format_italic' />
+                    <MarkButton format='underline' icon='format_underlined' />
+                    <MarkButton format='code' icon='code' />
+                    <BlockButton format='heading-one' icon='looks_one' />
+                    <BlockButton format='heading-two' icon='looks_two' />
+                    <BlockButton format='block-quote' icon='format_quote' />
+                    <BlockButton
+                      format='numbered-list'
+                      icon='format_list_numbered'
+                    />
+                    <BlockButton
+                      format='bulleted-list'
+                      icon='format_list_bulleted'
+                    />
+                  </Toolbar>
+                  <Editable
+                    className={classes.editable}
+                    renderElement={ukRenderElement}
+                    renderLeaf={ukRenderLeaf}
+                    placeholder='Enter some rich text…'
+                    spellCheck
+                    autoFocus
+                    onKeyDown={(event) => {
+                      for (let hotkey = 0; hotkey < HOTKEYS.length; hotkey++) {
+                        if (isHotkey(hotkey, event)) {
+                          event.preventDefault();
+                          const mark = HOTKEYS[hotkey];
+                          toggleMark(ukEditor, mark);
+                        }
+                      }
+                    }}
+                  />
+                </Slate>
+              </Paper>
             </Grid>
             <Grid item xs={6}>
-              <Paper className={classes.newsItemAdd}>{enNewsInputs}</Paper>
+              <Paper className={classes.newsItemAdd}>
+                {enNewsInputs}
+                <Slate
+                  editor={enEditor}
+                  value={enText}
+                  onChange={(value) => enSetText(value)}
+                >
+                  <Toolbar>
+                    <MarkButton format='bold' icon='format_bold' />
+                    <MarkButton format='italic' icon='format_italic' />
+                    <MarkButton format='underline' icon='format_underlined' />
+                    <MarkButton format='code' icon='code' />
+                    <BlockButton format='heading-one' icon='looks_one' />
+                    <BlockButton format='heading-two' icon='looks_two' />
+                    <BlockButton format='block-quote' icon='format_quote' />
+                    <BlockButton
+                      format='numbered-list'
+                      icon='format_list_numbered'
+                    />
+                    <BlockButton
+                      format='bulleted-list'
+                      icon='format_list_bulleted'
+                    />
+                  </Toolbar>
+                  <Editable
+                    className={classes.editable}
+                    renderElement={enRenderElement}
+                    renderLeaf={enRenderLeaf}
+                    placeholder='Enter some rich text…'
+                    spellCheck
+                    autoFocus
+                    onKeyDown={(event) => {
+                      for (let hotkey = 0; hotkey < HOTKEYS.length; hotkey++) {
+                        if (isHotkey('shift+enter', event)) {
+                          event.preventDefault();
+                          console.log('hi');
+                        }
+                        if (isHotkey(hotkey, event)) {
+                          event.preventDefault();
+                          const mark = HOTKEYS[hotkey];
+                          toggleMark(enEditor, mark);
+                        }
+                      }
+                    }}
+                  />
+                </Slate>
+              </Paper>
             </Grid>
           </Grid>
         </FormControl>
