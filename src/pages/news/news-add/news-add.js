@@ -29,7 +29,7 @@ const HOTKEYS = {
 const NewsAdd = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const loading = useSelector(({ News }) => News.loading);
+  const loading = useSelector(({ News }) => News.newsLoading);
   const {
     // deserializeHTML,
     serializeToHTML,
@@ -118,7 +118,7 @@ const NewsAdd = () => {
     };
     dispatch(addArticle(news));
   };
-  console.log(serializedUkText);
+
   const entertaimentOptions = [
     {
       id: 'authorPhoto',

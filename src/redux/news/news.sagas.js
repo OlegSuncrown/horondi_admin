@@ -1,7 +1,11 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { setNews, setNewsLoading, setArticle } from './news.actions';
-import { setError } from '../error/error.actions';
+import {
+  setNews,
+  setNewsLoading,
+  setArticle,
+  setNewsError
+} from './news.actions';
 
 import {
   getAllNews,
@@ -61,6 +65,7 @@ function* handleAddNews({ payload }) {
     yield call(createArticle, payload);
     const news = yield call(getAllNews, null);
     yield put(setNews(news));
+    yield put(setNewsLoading(false));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
@@ -103,7 +108,7 @@ function* handleNewsUpdate({ payload }) {
 
 function* handleNewsError(e) {
   yield put(setNewsLoading(false));
-  yield put(setError({ e }));
+  yield put(setNewsError({ e }));
   yield put(setSnackBarSeverity('error'));
   yield put(setSnackBarMessage(e.message));
   yield put(setSnackBarStatus(true));
