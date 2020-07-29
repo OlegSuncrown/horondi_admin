@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Leaf = ({ attributes, children, leaf }) => {
-  console.log(children);
   if (leaf.bold) {
-    // return { ...children, type: 'strong' }
     children = <strong>{children}</strong>;
   }
 
