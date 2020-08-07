@@ -50,8 +50,8 @@ const NewsPage = () => {
         <TableContainerRow
           key={index}
           id={newsItem.id}
-          author={newsItem.author.name[0].value}
-          title={newsItem.title[0].value}
+          author={newsItem.author.name}
+          title={newsItem.title}
           deleteHandler={() => newsDeleteHandler(newsItem._id)}
           editHandler={() => {
             dispatch(push(`/news/${newsItem._id}`));

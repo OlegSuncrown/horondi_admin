@@ -10,18 +10,9 @@ const getAllNews = async () => {
         getAllNews {
           _id
           author {
-            name {
-              lang
-              value
-            }
-            image {
-              small
-            }
+            name
           }
-          title {
-            lang
-            value
-          }
+          title
         }
       }
     `
