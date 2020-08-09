@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useStyles } from './news-details.styles';
 import { SaveButton } from '../../../components/buttons';
-import { config } from '../../../configs';
+// import { config } from '../../../configs';
 import useNewsHandlers from '../../../utils/use-news-handlers';
 
 import LoadingBar from '../../../components/loading-bar';
 import { getArticle, updateArticle } from '../../../redux/news/news.actions';
 
-const { languages } = config;
+// const { languages } = config;
 const NewsDetails = ({ match }) => {
   const dispatch = useDispatch();
   const { loading, newsArticle } = useSelector(({ News }) => ({
@@ -23,22 +23,14 @@ const NewsDetails = ({ match }) => {
   const {
     authorPhoto,
     newsImage,
-    newsVideo,
-    ukAuthorName,
-    ukText,
-    ukTitle,
-    enAuthorName,
-    enText,
-    enTitle,
+    authorName,
+    text,
+    title,
     setAuthorPhoto,
     setNewsImage,
-    setNewsVideo,
-    ukSetAuthor,
-    ukSetText,
-    ukSetTitle,
-    enSetAuthor,
-    enSetText,
-    enSetTitle
+    setAuthor,
+    setText,
+    setTitle
   } = useNewsHandlers();
 
   const { id } = match.params;
@@ -47,76 +39,13 @@ const NewsDetails = ({ match }) => {
   }, [dispatch, id]);
   useEffect(() => {
     if (newsArticle !== null) {
-      setAuthorPhoto(newsArticle.author.image.small);
-      setNewsImage(newsArticle.images.primary.medium);
-      setNewsVideo(newsArticle.video);
-
-      ukSetAuthor(newsArticle.author.name[0].value);
-      ukSetText(newsArticle.text[0].value);
-      ukSetTitle(newsArticle.title[0].value);
-
-      enSetAuthor(newsArticle.author.name[1].value);
-      enSetText(newsArticle.text[1].value);
-      enSetTitle(newsArticle.title[1].value);
+      console.log('not null');
     }
-  }, [
-    newsArticle,
-    setAuthorPhoto,
-    setNewsImage,
-    setNewsVideo,
-    ukSetAuthor,
-    ukSetText,
-    ukSetTitle,
-    enSetAuthor,
-    enSetText,
-    enSetTitle
-  ]);
+  }, [newsArticle]);
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
-    const newArticle = {
-      video: newsVideo,
-      author: {
-        name: [
-          {
-            lang: languages[0],
-            value: ukAuthorName
-          },
-          {
-            lang: languages[1],
-            value: enAuthorName
-          }
-        ],
-        image: {
-          small: authorPhoto
-        }
-      },
-      title: [
-        {
-          lang: languages[0],
-          value: ukTitle
-        },
-        {
-          lang: languages[1],
-          value: enTitle
-        }
-      ],
-      text: [
-        {
-          lang: languages[0],
-          value: ukText
-        },
-        {
-          lang: languages[1],
-          value: enText
-        }
-      ],
-      images: {
-        primary: {
-          medium: newsImage
-        }
-      }
-    };
+    const newArticle = {};
     dispatch(updateArticle({ id, newArticle }));
   };
 
@@ -137,12 +66,6 @@ const NewsDetails = ({ match }) => {
                   variant='outlined'
                   label='Фото автора'
                   multiline
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
                   value={authorPhoto}
                   onChange={(e) => setAuthorPhoto(e.target.value)}
                   required
@@ -153,136 +76,38 @@ const NewsDetails = ({ match }) => {
                   variant='outlined'
                   label='Головне зображення'
                   multiline
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
                   value={newsImage}
                   onChange={(e) => setNewsImage(e.target.value)}
                   required
                 />
                 <TextField
-                  id='newsVideo'
+                  id='authorName'
                   className={classes.textField}
                   variant='outlined'
-                  label='Посилання на відео'
+                  label='Автор'
                   multiline
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={newsVideo}
-                  onChange={(e) => setNewsVideo(e.target.value)}
-                  required
-                />
-              </Paper>
-            </Grid>
-
-            <Grid item xs={6}>
-              <Paper className={classes.newsItemUpdate}>
-                <TextField
-                  id='ukAuthorName'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Автор (укр.)'
-                  multiline
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={ukAuthorName}
-                  onChange={(e) => ukSetAuthor(e.target.value)}
+                  value={authorName}
+                  onChange={(e) => setAuthor(e.target.value)}
                   required
                 />
                 <TextField
-                  id='ukTitle'
+                  id='title'
                   className={classes.textField}
                   variant='outlined'
-                  label='Заголовок (укр.)'
+                  label='Заголовок'
                   multiline
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={ukTitle}
-                  onChange={(e) => ukSetTitle(e.target.value)}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   required
                 />
                 <TextField
-                  id='ukText'
+                  id='text'
                   className={classes.textField}
                   variant='outlined'
-                  label='Текст (укр.)'
+                  label='Текст'
                   multiline
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={ukText}
-                  onChange={(e) => ukSetText(e.target.value)}
-                  required
-                />
-              </Paper>
-            </Grid>
-
-            <Grid item xs={6}>
-              <Paper className={classes.newsItemUpdate}>
-                <TextField
-                  id='enAuthorName'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Автор (англ.)'
-                  multiline
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={enAuthorName}
-                  onChange={(e) => enSetAuthor(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='enTitle'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Заголовок (англ.)'
-                  multiline
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={enTitle}
-                  onChange={(e) => enSetTitle(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='enText'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Текст (англ.)'
-                  multiline
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={enText}
-                  onChange={(e) => enSetText(e.target.value)}
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
                   required
                 />
               </Paper>

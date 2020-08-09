@@ -86,9 +86,7 @@ const deleteArticle = async (id) => {
         deleteNews(id: $id) {
           ... on News {
             author {
-              name {
-                value
-              }
+              name
             }
           }
           ... on Error {
@@ -121,9 +119,7 @@ const createArticle = async (news) => {
         addNews(news: $news) {
           ... on News {
             author {
-              name {
-                value
-              }
+              name
             }
           }
           ... on Error {
