@@ -28,33 +28,22 @@ const getArticleById = async (id) => {
       query($id: ID!) {
         getNewsById(id: $id) {
           ... on News {
-            title {
-              lang
-              value
-            }
-            text {
-              lang
-              value
-            }
-            images {
-              primary {
-                medium
-              }
-              additional {
-                large
-              }
-            }
-            video
             author {
-              name {
-                lang
-                value
-              }
+              name
               image {
                 small
               }
             }
+            text
+            title
+            lang
             date
+            show
+            images {
+              primary {
+                medium
+              }
+            }
           }
           ... on Error {
             message
@@ -155,9 +144,7 @@ const updateArticle = async (id, news) => {
         updateNews(id: $id, news: $news) {
           ... on News {
             author {
-              name {
-                value
-              }
+              name
             }
           }
           ... on Error {

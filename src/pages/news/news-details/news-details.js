@@ -1,23 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Paper, TextField, FormControl, Grid } from '@material-ui/core';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useStyles } from './news-details.styles';
 import { SaveButton } from '../../../components/buttons';
-// import { config } from '../../../configs';
+import { config } from '../../../configs';
 import useNewsHandlers from '../../../utils/use-news-handlers';
 
 import LoadingBar from '../../../components/loading-bar';
 import { getArticle, updateArticle } from '../../../redux/news/news.actions';
 
-// const { languages } = config;
+const { languages } = config;
+
 const NewsDetails = ({ match }) => {
   const dispatch = useDispatch();
   const { loading, newsArticle } = useSelector(({ News }) => ({
     loading: News.newsLoading,
     newsArticle: News.newsArticle
   }));
+
+  const [language, setLanguage] = useState('');
+
   const classes = useStyles();
 
   const {
@@ -39,15 +46,43 @@ const NewsDetails = ({ match }) => {
   }, [dispatch, id]);
   useEffect(() => {
     if (newsArticle !== null) {
-      console.log('not null');
+      setAuthor(newsArticle.author.name);
+      setAuthorPhoto(newsArticle.author.image.small);
+      setNewsImage(newsArticle.images.primary.medium);
+      setTitle(newsArticle.title);
+      setText(newsArticle.text);
+      setLanguage(newsArticle.lang);
     }
-  }, [newsArticle]);
+  }, [newsArticle, setAuthor, setAuthorPhoto, setNewsImage, setText, setTitle]);
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
-    const newArticle = {};
+    const newArticle = {
+      author: {
+        name: authorName,
+        image: {
+          small: authorPhoto
+        }
+      },
+      text,
+      title,
+      lang: language,
+      show: true,
+      images: {
+        primary: {
+          medium: newsImage
+        }
+      }
+    };
+
     dispatch(updateArticle({ id, newArticle }));
   };
+
+  const languagesOptions = languages.map((lang, index) => (
+    <MenuItem key={index} value={lang}>
+      {lang}
+    </MenuItem>
+  ));
 
   if (loading) {
     return <LoadingBar />;
@@ -56,6 +91,28 @@ const NewsDetails = ({ match }) => {
   return (
     <div className={classes.detailsContainer}>
       <form className={classes.form} onSubmit={newsSaveHandler}>
+        <div className={classes.controlsBlock}>
+          <FormControl className={classes.formControl}>
+            <InputLabel id='demo-simple-select-label'>Мова</InputLabel>
+            <Select
+              className={classes.select}
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              required
+            >
+              {languagesOptions}
+            </Select>
+          </FormControl>
+
+          <SaveButton
+            className={classes.saveButton}
+            id='save'
+            type='submit'
+            title='Зберегти'
+          />
+        </div>
         <FormControl className={classes.newsDetails}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
@@ -114,12 +171,6 @@ const NewsDetails = ({ match }) => {
             </Grid>
           </Grid>
         </FormControl>
-        <SaveButton
-          id='save'
-          type='submit'
-          title='Зберегти'
-          className={classes.saveButton}
-        />
       </form>
     </div>
   );

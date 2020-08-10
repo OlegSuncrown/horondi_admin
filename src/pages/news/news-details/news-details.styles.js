@@ -4,8 +4,7 @@ export const useStyles = makeStyles((theme) => ({
   newsItemUpdate: {
     display: 'flex',
     flexDirection: 'column',
-    margin: theme.spacing(2),
-    paddingTop: 10
+    margin: '20px 0'
   },
   newsDetails: {
     display: 'flex',
@@ -18,18 +17,16 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: 70
   },
   saveButton: {
-    margin: theme.spacing(2)
+    margin: '20px 0'
   },
-  inputLabel: {
-    fontSize: 12,
-    '&.shrink': {
-      transform: 'translate(32px, -3px) scale(0.75)'
-    }
+  controlsBlock: {
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   textField: {
-    textTransform: 'uppercase',
-    padding: 10,
-    margin: '5px 0',
-    width: '100%'
+    margin: '10px 5px'
+  },
+  select: {
+    width: '150px'
   }
 }));
