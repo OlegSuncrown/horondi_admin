@@ -141,50 +141,50 @@ const NewsAdd = () => {
             title='Зберегти'
           />
         </div>
-        <FormControl className={classes.newsAdd}>
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Paper className={classes.newsItemAdd}>
-                <TextField
-                  id='authorPhoto'
-                  className={classes.textfield}
-                  variant='outlined'
-                  label='Фото автора'
-                  multiline
-                  value={authorPhoto}
-                  onChange={(e) => setAuthorPhoto(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='newsImage'
-                  className={classes.textfield}
-                  variant='outlined'
-                  label='Головне зображення'
-                  multiline
-                  value={newsImage}
-                  onChange={(e) => setNewsImage(e.target.value)}
-                  required
-                />
-              </Paper>
-            </Grid>
-          </Grid>
-        </FormControl>
-        <AppBar position='static'>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label='simple tabs example'
-          >
-            {language === 'uk' || language === 'multilanguage' ? (
-              <Tab label='uk' {...a11yProps(0)} />
-            ) : null}
-            {language === 'en' || language === 'multilanguage' ? (
-              <Tab label='en' {...a11yProps(1)} />
-            ) : null}
-          </Tabs>
-        </AppBar>
         {language !== '' ? (
           <div>
+            <FormControl className={classes.newsAdd}>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Paper className={classes.newsItemAdd}>
+                    <TextField
+                      id='authorPhoto'
+                      className={classes.textfield}
+                      variant='outlined'
+                      label='Фото автора'
+                      multiline
+                      value={authorPhoto}
+                      onChange={(e) => setAuthorPhoto(e.target.value)}
+                      required
+                    />
+                    <TextField
+                      id='newsImage'
+                      className={classes.textfield}
+                      variant='outlined'
+                      label='Головне зображення'
+                      multiline
+                      value={newsImage}
+                      onChange={(e) => setNewsImage(e.target.value)}
+                      required
+                    />
+                  </Paper>
+                </Grid>
+              </Grid>
+            </FormControl>
+            <AppBar position='static'>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label='simple tabs example'
+              >
+                {language === 'uk' || language === 'multilanguage' ? (
+                  <Tab label='uk' {...a11yProps(0)} />
+                ) : null}
+                {language === 'en' || language === 'multilanguage' ? (
+                  <Tab label='en' {...a11yProps(1)} />
+                ) : null}
+              </Tabs>
+            </AppBar>
             <TabPanel value={value} index={0}>
               <Grid item xs={12}>
                 <Paper className={classes.newsItemAdd}>
