@@ -8,14 +8,18 @@ import {
   SET_PAGES_COUNT
 } from './news.types';
 
+import { config } from '../../configs';
+
+const { productsPerPage, pagesCount } = config.paginationPayload;
+
 const initialState = {
   list: [],
   newsArticle: null,
   newsLoading: false,
   newsError: null,
   currentPage: 0,
-  productsPerPage: 5,
-  pagesCount: 1
+  productsPerPage,
+  pagesCount
 };
 
 const newsReducer = (state = initialState, action = {}) => {

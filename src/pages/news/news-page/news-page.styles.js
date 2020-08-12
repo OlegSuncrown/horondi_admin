@@ -7,9 +7,7 @@ export const useStyles = makeStyles((theme) => ({
   tableNav: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: theme.spacing(1),
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(2)
+    margin: '20px 0'
   },
   container: {
     width: `100%`,
