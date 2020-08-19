@@ -3,6 +3,26 @@ import { client } from '../../utils/client';
 
 import { newsTranslations } from '../../translations/news.translations';
 
+const uploadFile = async (file) => {
+  const result = await client.mutate({
+    mutation: gql`
+      mutation($file: Upload!) {
+        uploadSingleFile(file: $file) {
+          path {
+            large
+            medium
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache',
+    variables: {
+      file
+    }
+  });
+  console.log(result);
+};
+
 const getAllNews = async (skip, limit) => {
   const result = await client.query({
     variables: {
@@ -208,5 +228,6 @@ export {
   deleteArticle,
   getArticleById,
   createArticle,
-  updateArticle
+  updateArticle,
+  uploadFile
 };
