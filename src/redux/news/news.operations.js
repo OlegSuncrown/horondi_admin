@@ -20,7 +20,8 @@ const uploadFile = async (file) => {
       file
     }
   });
-  console.log(result);
+  const { data } = result;
+  return data.uploadSingleFile;
 };
 
 const getAllNews = async (skip, limit) => {
