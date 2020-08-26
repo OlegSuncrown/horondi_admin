@@ -53,7 +53,6 @@ function* handleNewsLoad({
     const news = yield call(getAllNews, payload.skip, payload.limit);
     yield put(setPagesCount(Math.ceil(news.count / payload.newsPerPage)));
     yield put(setNews(news.items));
-    yield put(setPagesCount(news.count));
     yield put(setNewsLoading(false));
   } catch (error) {
     yield call(handleNewsError, error);

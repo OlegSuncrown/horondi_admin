@@ -1,5 +1,6 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import PeopleIcon from '@material-ui/icons/People';
+import ColorLensIcon from '@material-ui/icons/ColorLens';
 
 export const routes = {
   pathToLogin: '/',
@@ -18,7 +19,7 @@ export const config = {
     title: 'Horondi Admin Portal',
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
-      ['Гобелени', routes.pathToPatterns, ImportContactsIcon],
+      ['Гобелени', routes.pathToPatterns, ColorLensIcon],
       ['Користувачі', routes.pathToUsers, PeopleIcon]
     ],
     routes,

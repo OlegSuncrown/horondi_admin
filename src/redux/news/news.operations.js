@@ -35,7 +35,7 @@ const getAllNews = async (skip, limit) => {
   });
   client.resetStore();
   const { data } = result;
-  return { items: data.getAllNews.items, pagesCount: data.getAllNews.count };
+  return data.getAllNews;
 };
 
 const getArticleById = async (id) => {
