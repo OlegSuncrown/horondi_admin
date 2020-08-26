@@ -1,8 +1,11 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import PeopleIcon from '@material-ui/icons/People';
 
 export const routes = {
   pathToLogin: '/',
   pathToNews: '/',
+  pathToUsers: '/users',
+  pathToUsersDetails: '/users/:id',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/news/add',
   pathToAddPatern: '/patern/add',
@@ -15,7 +18,8 @@ export const config = {
     title: 'Horondi Admin Portal',
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
-      ['Гобелени', routes.pathToPatterns, ImportContactsIcon]
+      ['Гобелени', routes.pathToPatterns, ImportContactsIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -29,7 +33,8 @@ export const config = {
   },
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
-    pattern: ['Фото', 'Назва', 'Матеріал', 'Доступний', 'Дії']
+    pattern: ['Фото', 'Назва', 'Матеріал', 'Доступний', 'Дії'],
+    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -48,7 +53,13 @@ export const config = {
     SUCCESS_DELETE_STATUS: 'Успішно видалено!',
     SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
     ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
-    LOGIN_PAGE_STATUS: 'Невірний логін або пароль'
+    LOGIN_PAGE_STATUS: 'Невірний логін або пароль',
+    USER_ACTIVE_STATUS: 'Активний',
+    USER_UNACTIVE_STATUS: 'Неактивний'
+  },
+  errorMessages: {
+    USER_NOT_FOUND: 'Користувач не знайдений!',
+    USER_NOT_AUTHORIZED: 'Користувач не отримав прав доступу'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
@@ -56,11 +67,18 @@ export const config = {
     CREATE_NEWS_TITLE: 'Додати новину',
     CREATE_PATTERN_TITLE: 'Додати гобелен',
     REMOVE_TITLE: 'Видалити',
+    REMOVE_USER_TITLE: 'Видалити користувача',
+    SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
     CANCEL_TITLE: 'Відмінити',
-    LOGOUT_TITLE: 'Вихід'
+    LOGOUT_TITLE: 'Вихід',
+    USER_UNACTIVE_TITLE: 'Деактивувати',
+    USER_ACTIVE_TITLE: 'Активувати'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
+    SWITCH_USER_STATUS_MESSAGE:
+      'Ви впевнені,що хочете змінити статус користувача?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
   },
   patternMessages: {
