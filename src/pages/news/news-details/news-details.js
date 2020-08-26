@@ -110,6 +110,7 @@ const NewsDetails = ({ match }) => {
         <Tab label={lang} key={index} />
       ))
       : null;
+
   if (loading) {
     return <LoadingBar />;
   }
@@ -176,64 +177,41 @@ const NewsDetails = ({ match }) => {
                   {LanguageTabs}
                 </Tabs>
               </AppBar>
-              <TabPanel value={tabsValue} index={0}>
-                <Paper className={classes.newsItemUpdate}>
-                  <TextField
-                    id='ukAuthorName'
-                    className={classes.textField}
-                    variant='outlined'
-                    label='Автор uk'
-                    multiline
-                    value={props.values.ukAuthorName}
-                    onChange={props.handleChange}
-                    required
-                  />
-                  <TextField
-                    id='ukTitle'
-                    className={classes.textField}
-                    variant='outlined'
-                    label='Заголовок uk'
-                    multiline
-                    value={props.values.ukTitle}
-                    onChange={props.handleChange}
-                    required
-                  />
-                  <Editor
-                    value={ukText}
-                    placeholder='Текст'
-                    onEditorChange={(value) => ukSetText(value)}
-                  />
-                </Paper>
-              </TabPanel>
-              <TabPanel value={tabsValue} index={1}>
-                <Paper className={classes.newsItemUpdate}>
-                  <TextField
-                    id='enAuthorName'
-                    className={classes.textField}
-                    variant='outlined'
-                    label='Автор en'
-                    multiline
-                    value={props.values.enAuthorName}
-                    onChange={props.handleChange}
-                    required
-                  />
-                  <TextField
-                    id='enTitle'
-                    className={classes.textField}
-                    variant='outlined'
-                    label='Заголовок en'
-                    multiline
-                    value={props.values.enTitle}
-                    onChange={props.handleChange}
-                    required
-                  />
-                  <Editor
-                    value={enText}
-                    placeholder='Текст'
-                    onEditorChange={(value) => enSetText(value)}
-                  />
-                </Paper>
-              </TabPanel>
+              {preferredLanguages.map((lang, index) => (
+                <TabPanel key={index} value={tabsValue} index={index}>
+                  <Paper className={classes.newsItemUpdate}>
+                    <TextField
+                      id={`${lang}AuthorName`}
+                      className={classes.textField}
+                      variant='outlined'
+                      label={`Автор ${lang}`}
+                      multiline
+                      value={props.values[`${lang}AuthorName`]}
+                      onChange={props.handleChange}
+                      required
+                    />
+                    <TextField
+                      id={`${lang}Title`}
+                      className={classes.textField}
+                      variant='outlined'
+                      label={`Заголовок ${lang}`}
+                      multiline
+                      value={props.values[`${lang}Title`]}
+                      onChange={props.handleChange}
+                      required
+                    />
+                    <Editor
+                      value={props.values[`${lang}Text`]}
+                      placeholder='Текст'
+                      onEditorChange={(value) => lang === 'uk'
+                        ? ukSetText(value)
+                        : lang === 'en'
+                          ? enSetText(value)
+                          : null}
+                    />
+                  </Paper>
+                </TabPanel>
+              ))}
             </form>
           )}
         </Formik>
