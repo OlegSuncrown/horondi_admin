@@ -1,7 +1,9 @@
 import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
-
+import { getFromLocalStorage } from '../../services/local-storage.service';
 import { newsTranslations } from '../../translations/news.translations';
+
+const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 
 const getAllNews = async (skip, limit) => {
   const result = await client.query({
@@ -115,6 +117,11 @@ const deleteArticle = async (id) => {
         }
       }
     `,
+    context: {
+      headers: {
+        token
+      }
+    },
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
@@ -150,6 +157,11 @@ const createArticle = async (news) => {
         }
       }
     `,
+    context: {
+      headers: {
+        token
+      }
+    },
     fetchPolicy: 'no-cache',
     variables: { news }
   });
@@ -188,6 +200,11 @@ const updateArticle = async (id, news) => {
         }
       }
     `,
+    context: {
+      headers: {
+        token
+      }
+    },
     fetchPolicy: 'no-cache'
   });
   client.resetStore();

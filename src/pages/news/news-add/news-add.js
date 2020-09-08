@@ -44,6 +44,10 @@ const NewsAdd = () => {
     [`${lang}Text`]: ''
   }));
 
+  console.log(
+    Object.values(checkboxes).filter((ell) => ell === true)
+  );
+
   const formikValues = langValues !== null ? Object.assign(...langValues) : {};
 
   const formSchema = Yup.object().shape({

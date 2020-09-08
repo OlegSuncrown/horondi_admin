@@ -6,7 +6,8 @@ const { languages } = config;
 
 const useNewsHandlers = () => {
   const checkboxStates = languages.reduce(
-    (obj, lang) => ({ ...obj, [lang]: false }),
+    (obj, lang) =>
+      lang === 'uk' ? { ...obj, [lang]: true } : { ...obj, [lang]: false },
     {}
   );
 
@@ -30,7 +31,17 @@ const useNewsHandlers = () => {
   };
 
   const handleCheckboxChange = (event) => {
-    setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
+    console.log(event.target.checked);
+    if (
+      Object.values(checkboxes).filter((ell) => ell === true).length > 1
+    ) {
+      setCheckboxes({
+        ...checkboxes,
+        [event.target.name]: event.target.checked
+      });
+    } else {
+      setCheckboxes({ ...checkboxes, [event.target.name]: true });
+    }
   };
 
   const languageCheckboxes = languages.map((lang, index) => (
