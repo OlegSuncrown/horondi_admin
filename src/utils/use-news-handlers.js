@@ -31,10 +31,7 @@ const useNewsHandlers = () => {
   };
 
   const handleCheckboxChange = (event) => {
-    console.log(event.target.checked);
-    if (
-      Object.values(checkboxes).filter((ell) => ell === true).length > 1
-    ) {
+    if (Object.values(checkboxes).filter((ell) => ell === true).length > 1) {
       setCheckboxes({
         ...checkboxes,
         [event.target.name]: event.target.checked
