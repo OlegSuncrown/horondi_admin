@@ -20,7 +20,7 @@ export const config = {
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
       ['Категорії', routes.pathToCategories, CategoryIcon],
-      ['Користувачі', routes.pathToUsers, PeopleIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -53,7 +53,7 @@ export const config = {
     subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
-    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії'],
+    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії']
   },
   detailTitles: {
     users: {
@@ -134,7 +134,7 @@ export const config = {
     USER_ACTIVE_TITLE: 'Активувати',
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
-      'Ви впевнені,що хочете змінити статус користувача?',
+      'Ви впевнені,що хочете змінити статус користувача?'
   },
   formRegExp: {
     email:
@@ -157,7 +157,7 @@ export const config = {
   },
   paginationPayload: {
     skip: 0,
-    limit: 5,
+    limit: 6,
     newsPerPage: 6
   }
 };
