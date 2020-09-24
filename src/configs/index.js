@@ -47,11 +47,7 @@ export const config = {
       ['Користувачі', routes.pathToUsers, PeopleIcon],
       ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
       ['Новини', routes.pathToNews, ImportContactsIcon],
-      ['Контакти', routes.pathToContacts, ImportLocationOnIcon][
-        ('Категорії', routes.pathToCategories, CategoryIcon)
-      ],
-      ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
-      ['Користувачі', routes.pathToUsers, PeopleIcon],
+      ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
       ['Матеріали', routes.pathToMaterials, LocalMallIcon],
       ['Гобелени', routes.pathToPatterns, PaletteIcon],
       ['Останні коментарі', routes.pathToComments, SmsIcon]
@@ -311,6 +307,14 @@ export const config = {
     countPerPage: 6
   },
   labels: {
+    material: {
+      image: 'Фото матеріалу',
+      purpose: 'Застосування',
+      available: 'Доступний',
+      name: 'Назва матеріалу',
+      description: 'Опис матеріалу',
+      additionalPrice: 'Додаткова ціна'
+    },
     pattern: {
       image: 'Фото гобелена',
       material: 'Код матеріалу',
@@ -327,6 +331,11 @@ export const config = {
     }
   },
   materialPaginationPayload: {
+    skip: 0,
+    limit: 5,
+    materialsPerPage: 6
+  },
+  contactsPaginationPayload: {
     skip: 0,
     limit: 5,
     materialsPerPage: 6
@@ -445,5 +454,13 @@ export const config = {
     { lang: 'uk', value: '' },
     { lang: 'en', value: '' }
   ],
-  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/'
+  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
+  materialTitles: {
+    mainPageTitle: 'Iнформація про матеріали',
+    createPageTitle: 'Створити матеріал'
+  },
+  patternTitles: {
+    mainPageTitle: 'Iнформація про гобелени',
+    createPageTitle: 'Створити матеріал'
+  }
 };
