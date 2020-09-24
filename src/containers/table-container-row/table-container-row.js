@@ -12,6 +12,7 @@ const TableContainerRow = ({
   image,
   editHandler,
   showAvatar,
+  avatarSrc,
   showEdit,
   showDelete,
   deleteHandler,
@@ -34,8 +35,8 @@ const TableContainerRow = ({
     <TableRow key={id} hover>
       {showAvatar && (
         <TableCell>
-          <Avatar className={avatarSize} src={image}>
-            <ImageIcon />
+          <Avatar className={avatarSize} src={avatarSrc} alt='avatar'>
+            <ImageIcon fontSize={iconSize} />
           </Avatar>
         </TableCell>
       )}
@@ -58,6 +59,7 @@ TableContainerRow.propTypes = {
   deleteHandler: PropTypes.func,
   id: PropTypes.string,
   showAvatar: PropTypes.bool,
+  avatarSrc: PropTypes.string,
   showEdit: PropTypes.bool,
   showDelete: PropTypes.bool
 };
@@ -68,6 +70,7 @@ TableContainerRow.defaultProps = {
   deleteHandler: () => {},
   editHandler: () => {},
   showAvatar: true,
+  avatarSrc: '',
   showEdit: true,
   showDelete: true
 };

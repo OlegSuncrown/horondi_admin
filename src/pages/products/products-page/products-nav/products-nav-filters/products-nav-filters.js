@@ -9,14 +9,14 @@ import {
   setColorsFilter,
   setModelsFilter,
   setPatternsFilter
-} from '../../../redux/products/products.actions';
-import ProductsFiltersContainer from '../../../containers/products-filters-container';
+} from '../../../../../redux/products/products.actions';
+import ProductsFiltersContainer from '../../../../../containers/products-filters-container';
 
 import ProductsNavSort from '../products-nav-sort';
 import ProductsNavSearch from '../products-nav-search';
 
-import { productsTranslations } from '../../../translations/product.translations';
-import { setCurrentPage } from '../../../redux/table/table.actions';
+import { setCurrentPage } from '../../../../../redux/table/table.actions';
+import { productsTranslations } from '../../../../../translations/product.translations';
 
 const { CATEGORIES, PATTERNS, MODELS, COLORS } = productsTranslations;
 

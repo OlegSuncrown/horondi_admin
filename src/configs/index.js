@@ -21,6 +21,8 @@ export const routes = {
   pathToUsers: '/users',
   pathToUsersDetails: '/users/:id',
   pathToProducts: '/products',
+  pathToAddProduct: '/add-product',
+  pathToEditProduct: '/product/:id',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
   pathToEditCategory: '/add-category/:id',
@@ -36,14 +38,14 @@ export const config = {
   app: {
     title: 'Horondi Admin Portal',
     menuCategories: [
-      ['Новини', routes.pathToNews, ImportContactsIcon],
-      ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
-      ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
-      ['Категорії', routes.pathToCategories, CategoryIcon],
       ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
+      ['Категорії', routes.pathToCategories, CategoryIcon],
       ['Користувачі', routes.pathToUsers, PeopleIcon],
+      ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
+      ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
       ['Гобелени', routes.pathToPatterns, PaletteIcon],
-      ['Останні коментарі', routes.pathToComments, SmsIcon]
+      ['Останні коментарі', routes.pathToComments, SmsIcon],
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -301,12 +303,99 @@ export const config = {
         label: 'рейтингом',
         value: 'rate'
       }
-    ]
+    ],
+    stepsLabels: [
+      'Введіть інформацію про продукт',
+      'Оберіть категорію, підкатегорію, модель, колір, гобелен та ціну продукту',
+      'Оберіть опційні параметри',
+      'Завантажте фото для продукту',
+      'Підтвердження створення продукту'
+    ],
+    infoLabels: [
+      { label: 'Назва', name: 'name', required: true },
+      { label: 'Основний матеріал', name: 'mainMaterial', required: true },
+      { label: 'Внутрішній матеріал', name: 'innerMaterial', required: false },
+      { label: 'Замок', name: 'closure', required: false },
+      { label: 'Опис', name: 'description', required: false }
+    ],
+    selectsLabels: [
+      { label: 'Категорія ', name: 'category', type: 'select', required: true },
+      {
+        label: 'Підкатегорія ',
+        name: 'subcategory',
+        type: 'select',
+        required: true
+      },
+      { label: 'Модель ', name: 'model', type: 'select', required: true },
+      { label: 'Колір ', name: 'colors', type: 'select', required: true },
+      { label: 'Гобелен ', name: 'pattern', type: 'select', required: true },
+      {
+        label: 'Ціна(USD) ',
+        name: 'basePrice',
+        type: 'number',
+        required: true
+      },
+      {
+        label: 'Довжина лямок(см) ',
+        name: 'strapLengthInCm',
+        type: 'number',
+        required: false
+      }
+    ],
+    responsive: {
+      superLargeDesktop: {
+        breakpoint: { max: 4000, min: 3000 },
+        items: 1
+      },
+      desktop: {
+        breakpoint: { max: 3000, min: 1024 },
+        items: 1
+      },
+      tablet: {
+        breakpoint: { max: 1146, min: 464 },
+        items: 1
+      },
+      mobile: {
+        breakpoint: { max: 810, min: 0 },
+        items: 1
+      }
+    },
+    optionsLabels: [
+      { label: 'Розміри', name: 'sizes' },
+      { label: 'Нижні матеріали', name: 'bottomMaterials' }
+    ],
+    sizeCardsLabels: [
+      { label: 'Розмір', name: 'name' },
+      { label: `Об'єм(л)`, name: 'volumeInLiters' },
+      { label: 'Ширина(см)', name: 'widthInCm' },
+      { label: 'Висота(см)', name: 'heightInCm' },
+      { label: 'Глибина(см)', name: 'depthInCm' }
+    ],
+    materialsLabels: [{ label: `Назва`, name: 'name' }],
+    optionsValues: {
+      sizes: [],
+      bottomMaterials: [],
+      additions: false
+    }
   },
   popularity: 'popularity',
   rate: 'rate',
   sortAsc: 'sortAsc',
   sortDesc: 'sortDesc',
   submitKey: 'Enter',
+  selectedLanguages: {
+    uk: {
+      name: 'uk',
+      checked: false
+    },
+    en: {
+      name: 'en',
+      checked: false
+    }
+  },
+  initialLanguageValues: [
+    { lang: 'uk', value: '' },
+    { lang: 'en', value: '' }
+  ],
   imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/'
 };

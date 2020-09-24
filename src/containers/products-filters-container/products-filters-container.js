@@ -44,7 +44,7 @@ const ProductsFiltersContainer = ({
         <Checkbox
           checked={!!productFilter.find((filter) => filter === condition)}
         />
-        <ListItemText primary={labels ? labels[idx] : item} />
+        <ListItemText primary={labels.length ? labels[idx] : item} />
       </MenuItem>
     );
   });

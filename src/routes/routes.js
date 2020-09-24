@@ -15,6 +15,7 @@ import Business from '../pages/business-pages';
 import BusinessPageForm from '../pages/business-pages/business-page-form';
 import ErrorPage from '../pages/error-page';
 import ProductsPage from '../pages/products/products-page';
+import ProductsAdd from '../pages/products/product-add';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
 import PatternPage from '../pages/pattern/pattern-page';
@@ -29,6 +30,8 @@ import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
+
+import ProductEdit from '../pages/products/product-edit';
 
 const { routes } = config.app;
 
@@ -98,6 +101,12 @@ const Routes = () => {
         />
         <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
+        <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
+        <Route
+          path={routes.pathToEditProduct}
+          exact
+          render={({ match }) => <ProductEdit id={match.params.id} />}
+        />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route path={routes.pathToComments} exact component={CommentsPage} />
         <Route

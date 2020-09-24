@@ -6,11 +6,12 @@ import {
   setSortByPopularity,
   setSortByPrice,
   setSortByRate
-} from '../../../redux/products/products.actions';
+} from '../../../../../redux/products/products.actions';
 import { useStyles } from './products-nav-sort.styles';
 
-import { config } from '../../../configs';
-import { productsTranslations } from '../../../translations/product.translations';
+import { config } from '../../../../../configs';
+import { productsTranslations } from '../../../../../translations/product.translations';
+import { setCurrentPage } from '../../../../../redux/table/table.actions';
 
 const {
   product: { sortBySelectOptions },
@@ -37,6 +38,7 @@ const ProductsNavSort = () => {
   const selectHandler = (e) => {
     const { value } = e.target;
     setSelectedSort(value);
+    dispatch(setCurrentPage(0));
     switch (value) {
     case sortAsc:
       return dispatch(setSortByPrice(1));
