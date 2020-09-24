@@ -5,6 +5,7 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
 import PaletteIcon from '@material-ui/icons/Palette';
+import SmsIcon from '@material-ui/icons/Sms';
 
 export const routes = {
   pathToLogin: '/',
@@ -27,7 +28,8 @@ export const routes = {
   pathToConfirmAdmin: '/confirmation/:token',
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
-  pathToAddContact: '/add-contact'
+  pathToAddContact: '/add-contact',
+  pathToComments: '/comments'
 };
 
 export const config = {
@@ -40,7 +42,8 @@ export const config = {
       ['Категорії', routes.pathToCategories, CategoryIcon],
       ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
       ['Користувачі', routes.pathToUsers, PeopleIcon],
-      ['Гобелени', routes.pathToPatterns, PaletteIcon]
+      ['Гобелени', routes.pathToPatterns, PaletteIcon],
+      ['Останні коментарі', routes.pathToComments, SmsIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
