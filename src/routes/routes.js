@@ -29,6 +29,8 @@ import { history } from '../store/store';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
+import MaterialPage from '../pages/material/material-page';
+import MaterialAdd from '../pages/material/material-add';
 import ConfirmUser from '../pages/users/confirm-user';
 
 import ProductEdit from '../pages/products/product-edit';
@@ -80,6 +82,8 @@ const Routes = () => {
           exact
           component={PatternDetails}
         />
+        <Route path={routes.pathToMaterials} exact component={MaterialPage} />
+        <Route path={routes.pathToAddMaterial} exact component={MaterialAdd} />
         <Route path={routes.pathToBusinessPages} exact component={Business} />
         <Route
           path={routes.pathToAddBusinessPage}

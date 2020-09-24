@@ -6,6 +6,7 @@ import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
 import PaletteIcon from '@material-ui/icons/Palette';
 import SmsIcon from '@material-ui/icons/Sms';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
 
 export const routes = {
   pathToLogin: '/',
@@ -15,6 +16,9 @@ export const routes = {
   pathToNews: '/news',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd',
+  pathToMaterials: '/materials',
+  pathToAddMaterial: '/material/add',
+  pathToMaterialDetails: '/materials/:id',
   pathToBusinessPages: '/business-pages',
   pathToAddBusinessPage: '/business-page-add',
   pathToBusinessPageDetails: '/business-pages/:id',
@@ -43,7 +47,12 @@ export const config = {
       ['Користувачі', routes.pathToUsers, PeopleIcon],
       ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
       ['Новини', routes.pathToNews, ImportContactsIcon],
-      ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
+      ['Контакти', routes.pathToContacts, ImportLocationOnIcon][
+        ('Категорії', routes.pathToCategories, CategoryIcon)
+      ],
+      ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon],
+      ['Матеріали', routes.pathToMaterials, LocalMallIcon],
       ['Гобелени', routes.pathToPatterns, PaletteIcon],
       ['Останні коментарі', routes.pathToComments, SmsIcon]
     ],
@@ -81,6 +90,7 @@ export const config = {
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
+    materials: ['Назва', 'Застосування', 'Доступний', 'Дії'],
     businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
     products: [
       'Фото',
@@ -175,6 +185,11 @@ export const config = {
     REMOVE_CONTACT_TITLE: 'Видалити контакт',
     REMOVE_USER_TITLE: 'Видалити користувача',
     SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
+    REMOVE_MATERIAL_TITLE: 'Видалити матеріал',
+    CREATE_MATERIAL_TITLE: 'Створити матеріал',
+    CREATE_COLOR_TITLE: 'Створити колір',
+    REMOVE_COLOR_TITLE: 'Видалити колір',
+    SAVE_MATERIAL: 'Зберегти матеріал',
     USER_INACTIVE_TITLE: 'Деактивувати',
     USER_ACTIVE_TITLE: 'Активувати',
     ADD_CATEGORY: 'Додати категорію',
@@ -219,6 +234,10 @@ export const config = {
       return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
     }
   },
+  materialMessages: {
+    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей матеріал?',
+    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
+  },
   formRegExp: {
     patternMaterial: '^[A-Za-z][A-Za-z0-9]*$',
     email:
@@ -226,6 +245,7 @@ export const config = {
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
     unwrapHtml: /(<([^>]+)>)/gi,
     enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
+    colorCode: /\d/,
     editorField: /^<p><br><\/p>$/
   },
   loginErrorMessages: {
@@ -256,6 +276,19 @@ export const config = {
       'Заголовок повинен містити не більше 100 символів',
     TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів'
   },
+  materialErrorMessages: {
+    MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
+    MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
+    VALIDATION_ERROR: 'Поле обовязкове'
+  },
+  colorErrorMessages: {
+    CODE_VALIDATION_ERROR: 'Тільки цифри',
+    MAX_CODE_LENGTH_MESSAGE: 'Не більше 10 символів',
+    MAX_LENGTH_MESSAGE: `Не більше 1000 символів`,
+    MIN_LENGTH_MESSAGE: `Не менше 1 символа`,
+    VALIDATION_ERROR: 'Поле обовязкове',
+    CODE_NOT_UNIQUE_ERROR: 'Такий код вже використовується'
+  },
   contactErrorMessages: {
     INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
     ENTER_EMAIL_MESSAGE: 'Введіть email',
@@ -284,15 +317,22 @@ export const config = {
       available: 'Доступний',
       handmade: 'Зроблений вручну',
       avatarText: 'Фото'
+    },
+    colors: {
+      image: 'Фото кольору',
+      name: 'Назва кольору',
+      simpleName: 'Проста назва кольору',
+      code: 'Код кольору',
+      available: 'Доступний'
     }
+  },
+  materialPaginationPayload: {
+    skip: 0,
+    limit: 5,
+    materialsPerPage: 6
   },
   patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
   newsPerPage: 6,
-  contactsPaginationPayload: {
-    skip: 0,
-    limit: 6,
-    contactsPerPage: 7
-  },
   product: {
     sortBySelectOptions: [
       {
@@ -311,80 +351,80 @@ export const config = {
         label: 'рейтингом',
         value: 'rate'
       }
-    ],
-    stepsLabels: [
-      'Введіть інформацію про продукт',
-      'Оберіть категорію, підкатегорію, модель, колір, гобелен та ціну продукту',
-      'Оберіть опційні параметри',
-      'Завантажте фото для продукту',
-      'Підтвердження створення продукту'
-    ],
-    infoLabels: [
-      { label: 'Назва', name: 'name', required: true },
-      { label: 'Основний матеріал', name: 'mainMaterial', required: true },
-      { label: 'Внутрішній матеріал', name: 'innerMaterial', required: false },
-      { label: 'Замок', name: 'closure', required: false },
-      { label: 'Опис', name: 'description', required: false }
-    ],
-    selectsLabels: [
-      { label: 'Категорія ', name: 'category', type: 'select', required: true },
-      {
-        label: 'Підкатегорія ',
-        name: 'subcategory',
-        type: 'select',
-        required: true
-      },
-      { label: 'Модель ', name: 'model', type: 'select', required: true },
-      { label: 'Колір ', name: 'colors', type: 'select', required: true },
-      { label: 'Гобелен ', name: 'pattern', type: 'select', required: true },
-      {
-        label: 'Ціна(USD) ',
-        name: 'basePrice',
-        type: 'number',
-        required: true
-      },
-      {
-        label: 'Довжина лямок(см) ',
-        name: 'strapLengthInCm',
-        type: 'number',
-        required: false
-      }
-    ],
-    responsive: {
-      superLargeDesktop: {
-        breakpoint: { max: 4000, min: 3000 },
-        items: 1
-      },
-      desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 1
-      },
-      tablet: {
-        breakpoint: { max: 1146, min: 464 },
-        items: 1
-      },
-      mobile: {
-        breakpoint: { max: 810, min: 0 },
-        items: 1
-      }
+    ]
+  },
+  stepsLabels: [
+    'Введіть інформацію про продукт',
+    'Оберіть категорію, підкатегорію, модель, колір, гобелен та ціну продукту',
+    'Оберіть опційні параметри',
+    'Завантажте фото для продукту',
+    'Підтвердження створення продукту'
+  ],
+  infoLabels: [
+    { label: 'Назва', name: 'name', required: true },
+    { label: 'Основний матеріал', name: 'mainMaterial', required: true },
+    { label: 'Внутрішній матеріал', name: 'innerMaterial', required: false },
+    { label: 'Замок', name: 'closure', required: false },
+    { label: 'Опис', name: 'description', required: false }
+  ],
+  selectsLabels: [
+    { label: 'Категорія ', name: 'category', type: 'select', required: true },
+    {
+      label: 'Підкатегорія ',
+      name: 'subcategory',
+      type: 'select',
+      required: true
     },
-    optionsLabels: [
-      { label: 'Розміри', name: 'sizes' },
-      { label: 'Нижні матеріали', name: 'bottomMaterials' }
-    ],
-    sizeCardsLabels: [
-      { label: 'Розмір', name: 'name' },
-      { label: `Об'єм(л)`, name: 'volumeInLiters' },
-      { label: 'Ширина(см)', name: 'widthInCm' },
-      { label: 'Висота(см)', name: 'heightInCm' },
-      { label: 'Глибина(см)', name: 'depthInCm' }
-    ],
-    materialsLabels: [{ label: `Назва`, name: 'name' }],
-    optionsValues: {
-      sizes: [],
-      bottomMaterials: [],
-      additions: false
+    { label: 'Модель ', name: 'model', type: 'select', required: true },
+    { label: 'Колір ', name: 'colors', type: 'select', required: true },
+    { label: 'Гобелен ', name: 'pattern', type: 'select', required: true },
+    {
+      label: 'Ціна(USD) ',
+      name: 'basePrice',
+      type: 'number',
+      required: true
+    },
+    {
+      label: 'Довжина лямок(см) ',
+      name: 'strapLengthInCm',
+      type: 'number',
+      required: false
     }
+  ],
+  responsive: {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 1
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1
+    },
+    tablet: {
+      breakpoint: { max: 1146, min: 464 },
+      items: 1
+    },
+    mobile: {
+      breakpoint: { max: 810, min: 0 },
+      items: 1
+    }
+  },
+  optionsLabels: [
+    { label: 'Розміри', name: 'sizes' },
+    { label: 'Нижні матеріали', name: 'bottomMaterials' }
+  ],
+  sizeCardsLabels: [
+    { label: 'Розмір', name: 'name' },
+    { label: `Об'єм(л)`, name: 'volumeInLiters' },
+    { label: 'Ширина(см)', name: 'widthInCm' },
+    { label: 'Висота(см)', name: 'heightInCm' },
+    { label: 'Глибина(см)', name: 'depthInCm' }
+  ],
+  materialsLabels: [{ label: `Назва`, name: 'name' }],
+  optionsValues: {
+    sizes: [],
+    bottomMaterials: [],
+    additions: false
   },
   popularity: 'popularity',
   rate: 'rate',
