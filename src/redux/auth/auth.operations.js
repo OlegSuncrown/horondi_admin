@@ -47,7 +47,7 @@ export const getUserByToken = async (token) => {
             message
           }
         }
-
+      }
     `,
     context: {
       headers: {

@@ -182,7 +182,7 @@ export const config = {
     REMOVE_USER_TITLE: 'Видалити користувача',
     SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
     REMOVE_MATERIAL_TITLE: 'Видалити матеріал',
-    CREATE_MATERIAL_TITLE: 'Створити матеріал',
+    CREATE_MATERIAL_TITLE: 'Додати матеріал',
     CREATE_COLOR_TITLE: 'Створити колір',
     REMOVE_COLOR_TITLE: 'Видалити колір',
     SAVE_MATERIAL: 'Зберегти матеріал',

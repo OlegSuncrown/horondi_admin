@@ -43,13 +43,15 @@ function* handleAdminCheckByToken() {
       yield put(setAuth(false));
       return;
     }
+
     yield call(getUserByToken, authToken);
     yield put(setAuth(true));
     yield put(setAuthLoading(false));
   } catch (error) {
+    console.log('error happened', error);
     yield put(setAuthLoading(false));
     yield put(setAuth(false));
-    clearLocalStorage(null);
+    clearLocalStorage();
     yield put(push('/'));
   }
 }

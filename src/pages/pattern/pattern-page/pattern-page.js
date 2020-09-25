@@ -74,7 +74,7 @@ const PatternPage = () => {
     list !== undefined
       ? list.map((patternItem, index) => (
         <TableContainerRow
-          image={
+          avatarSrc={
             patternItem.images.thumbnail
               ? `${config.patternImageLink}${patternItem.images.thumbnail}`
               : ''
